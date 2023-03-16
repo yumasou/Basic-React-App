@@ -1,25 +1,34 @@
 import React from 'react'
-import  createRef  from 'react'
-class AddForm extends React.Component{
-    nameref = React.createRef();
-    priceref = React.createRef();
-    add=()=>{
-        let name=this.nameref.current.value;
-        let price=this.priceref.current.value;
-        this.props.add(name,price)
-        this.priceref.current.value=""
-        this.nameref.current.value=""
-
-    }
+const AddForm=props=>{
+ let   nameref=React.createRef();
+ let   priceref=React.createRef();
+let Add=()=>{
     
-render(){
+    let name=nameref.current.value;
+    let price=priceref.current.value;
+    if(name==="" || price===""){
+        alert("name or pricing is missing")
+    }
+    else{props.add(name,price)}
+    nameref.current.value="";
+    priceref.current.value="";
+}
     return(
-        <div className='col-6 m-auto border border-3 border-success'>
-            <input type="text" className='form-control mt-3' ref={this.nameref} placeholder='Enter name'/>
-            <input type="text" className='form-control mt-3' ref={this.priceref} placeholder='Enter price' />
-            <button className='btn btn-primary mt-3' onClick={this.add}>Submit</button>
+        <div className='col-4 form m-auto mt-4'>
+           <label htmlFor="name" className='form-label'>Name</label>
+            <input type="text" id='name' className='form-control' ref={nameref} />
+            <small className='text-danger d-none' id='namerr'>
+                Name is missing
+            </small>
+            <br />
+            <label htmlFor="price" className='form-label'>Price</label>
+            <input type="text" id='price' className='form-control' ref={priceref} />
+            <small id='pricerr' className='text-danger d-none' >
+                Price is missing
+            </small>
+            <br />
+            <button className='btn btn-primary px-5 mt-4' onClick={Add}>Add</button>
         </div>
     )
-}
 }
 export default AddForm;
